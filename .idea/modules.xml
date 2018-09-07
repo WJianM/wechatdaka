@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../TestDay2/TestDay2.iml" filepath="$PROJECT_DIR$/../TestDay2/TestDay2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wechatdaka.iml" filepath="$PROJECT_DIR$/wechatdaka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wechatdakaMaven/wechatdakaMaven.iml" filepath="$PROJECT_DIR$/wechatdakaMaven/wechatdakaMaven.iml" />
+    </modules>
+  </component>
+</project>
