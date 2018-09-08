@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.daka.mapper.RecordsMapper" >
   <resultMap id="BaseResultMap" type="com.daka.po.Records" >
-    <result column="id" property="id" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="records_date" property="recordsDate" jdbcType="TIMESTAMP" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="is_late" property="isLate" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, records_date, user_id
+    id, records_date, user_id, is_late
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.daka.po.RecordsExample" >
     select
@@ -81,19 +82,27 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from records
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from records
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.daka.po.RecordsExample" >
     delete from records
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <!--useGeneratedKeys="true" keyColumn="id"-->
-  <insert id="insert" parameterType="com.daka.po.Records" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >
-
-    insert into records ( records_date, user_id
-      )
-    values ( #{recordsDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}
-      )
+  <insert id="insert" parameterType="com.daka.po.Records" >
+    insert into records (id, records_date, user_id, 
+      is_late)
+    values (#{id,jdbcType=INTEGER}, #{recordsDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, 
+      #{isLate,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.daka.po.Records" >
     insert into records
@@ -107,6 +116,9 @@
       <if test="userId != null" >
         user_id,
       </if>
+      <if test="isLate != null" >
+        is_late,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -117,6 +129,9 @@
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="isLate != null" >
+        #{isLate,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -138,6 +153,9 @@
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
+      <if test="record.isLate != null" >
+        is_late = #{record.isLate,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -147,9 +165,32 @@
     update records
     set id = #{record.id,jdbcType=INTEGER},
       records_date = #{record.recordsDate,jdbcType=TIMESTAMP},
-      user_id = #{record.userId,jdbcType=INTEGER}
+      user_id = #{record.userId,jdbcType=INTEGER},
+      is_late = #{record.isLate,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daka.po.Records" >
+    update records
+    <set >
+      <if test="recordsDate != null" >
+        records_date = #{recordsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="isLate != null" >
+        is_late = #{isLate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daka.po.Records" >
+    update records
+    set records_date = #{recordsDate,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      is_late = #{isLate,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

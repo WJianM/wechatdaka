@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import com.daka.po.Result;
+import com.daka.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,12 @@ public class DakaController {
 	@Autowired
 	private RecordtimeService recordtimeService;
 
+	/**
+	 * 增加一条打卡记录
+	 * @param records 打卡记录
+	 * @param user 用户信息
+	 * @return
+	 */
 	@RequestMapping("add")
 	@ResponseBody
 	public Result addRecord(Records records, User user) {
@@ -40,12 +47,13 @@ public class DakaController {
 		return new Result(true,"打卡成功");
 	}
 
+
+
 	/**
-	 * 查询所有打卡记录
-	 * @param 用户Id
+	 * 获取所有的打卡记录
+	 * @param userId
 	 * @return
 	 */
-
 	@RequestMapping("findAll")
 	@ResponseBody
 	public List<Records> selectAllRecord(String userId) {
@@ -53,6 +61,11 @@ public class DakaController {
 		return list;
 	}
 
+	/**
+	 * 获取当前月份所有的打卡记录
+	 * @param userId
+	 * @return
+	 */
 	@RequestMapping("findAllByMonth")
 	@ResponseBody
 	public List<Records> selectAllRecordByMonth(String userId) {
@@ -62,6 +75,22 @@ public class DakaController {
         List<Records> list = dakaService.findAllByMonth(i+1);
 		return list;
 	}
+
+	/**
+	 * 查询本月异常记录
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping("findIsLateByMonth")
+	@ResponseBody
+	public List<Records> findIsLateByMonth(String userId) {
+		Date date = new Date();
+
+		String month = DateUtils.getMonth();
+		List<Records> list = dakaService.findIsLateByMonth(month);
+		return list;
+	}
+
 
 
 }

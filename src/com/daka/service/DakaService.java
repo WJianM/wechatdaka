@@ -11,4 +11,6 @@ public interface DakaService {
 	List<Records> findAll();
 
     List<Records> findAllByMonth(int i);
+
+	List<Records> findIsLateByMonth(String month);
 }

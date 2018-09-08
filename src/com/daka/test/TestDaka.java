@@ -2,6 +2,7 @@ package com.daka.test;
 
 import com.daka.mapper.RecordsMapper;
 import com.daka.po.Records;
+import com.daka.utils.DateUtils;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -28,6 +29,10 @@ public class TestDaka {
         recordsMapper.insert(records);
 
 
+	}
+	@Test
+	public void Test1(){
+		System.out.println(DateUtils.getMonth());
 	}
 
 }

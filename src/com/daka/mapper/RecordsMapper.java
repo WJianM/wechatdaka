@@ -2,13 +2,16 @@ package com.daka.mapper;
 
 import com.daka.po.Records;
 import com.daka.po.RecordsExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RecordsMapper {
     int countByExample(RecordsExample example);
 
     int deleteByExample(RecordsExample example);
+
+    int deleteByPrimaryKey(Integer id);
 
     int insert(Records record);
 
@@ -16,7 +19,13 @@ public interface RecordsMapper {
 
     List<Records> selectByExample(RecordsExample example);
 
+    Records selectByPrimaryKey(Integer id);
+
     int updateByExampleSelective(@Param("record") Records record, @Param("example") RecordsExample example);
 
     int updateByExample(@Param("record") Records record, @Param("example") RecordsExample example);
+
+    int updateByPrimaryKeySelective(Records record);
+
+    int updateByPrimaryKey(Records record);
 }

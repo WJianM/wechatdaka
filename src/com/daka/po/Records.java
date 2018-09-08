@@ -9,6 +9,8 @@ public class Records {
 
     private Integer userId;
 
+    private Integer isLate;
+
     public Integer getId() {
         return id;
     }
@@ -31,5 +33,13 @@ public class Records {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getIsLate() {
+        return isLate;
+    }
+
+    public void setIsLate(Integer isLate) {
+        this.isLate = isLate;
     }
 }

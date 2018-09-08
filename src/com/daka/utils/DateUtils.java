@@ -11,6 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 //import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class DateUtils {
@@ -345,6 +346,7 @@ public class DateUtils {
      * @date Mar 11, 2012
      * @return
      */
+
     public static String getMonth() {
         try {
             java.text.DecimalFormat df = new java.text.DecimalFormat();
@@ -1358,7 +1360,7 @@ public class DateUtils {
     }
 
     // 计算当月最后一天,返回字符串
-    public static String getLastDayTimeOfMonth2() {
+    public static Date getLastDayTimeOfMonth2() {
         String str = "";
         SimpleDateFormat sdf = new SimpleDateFormat(yyyyMMddHHmmss_FORMAT);
 
@@ -1371,7 +1373,7 @@ public class DateUtils {
         lastDate.set(Calendar.SECOND, 59);
 
         str = sdf.format(lastDate.getTime());
-        return str;
+        return lastDate.getTime();
     }
 
     // 上月第一天
@@ -1397,6 +1399,16 @@ public class DateUtils {
         lastDate.set(Calendar.DATE, 1);// 设为当前月的1号
         str = sdf.format(lastDate.getTime());
         return str;
+    }
+    // 获取当月第一天
+    public static Date getFirstDayDateOfMonth() {
+        String str = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar lastDate = Calendar.getInstance();
+        lastDate.set(Calendar.DATE, 1);// 设为当前月的1号
+        return lastDate.getTime();
+
     }
 
     public static String getFirstDayTimeOfMonth() {

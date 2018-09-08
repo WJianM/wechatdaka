@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.daka.po.RecordsExample;
+import com.daka.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +30,26 @@ public class DakaServiceImpl implements DakaService {
 		RecordsExample example = new RecordsExample();
 //		Calendar instance = Calendar.getInstance();
 //
-//		example.createCriteria().andRecordsDateBetween()
-		recordsMapper.selectByExample(example);
-		return null;
+		example.createCriteria().andRecordsDateBetween(DateUtils.getFirstDayDateOfMonth(),DateUtils.getLastDayTimeOfMonth2());
+		List<Records> records = recordsMapper.selectByExample(example);
+		return records;
+	}
+
+	/**
+	 * 查询本月异常记录
+	 * @param month
+	 * @return
+	 */
+	@Override
+	public List<Records> findIsLateByMonth(String month) {
+		RecordsExample example = new RecordsExample();
+//		RecordsExample.Criteria criteria = example.createCriteria().andRecordsDateBetween(DateUtils.getFirstDayDateOfMonth(), DateUtils.getLastDayTimeOfMonth2());
+		RecordsExample.Criteria criteria = example.createCriteria();
+		criteria.andRecordsDateBetween(DateUtils.getFirstDayDateOfMonth(),DateUtils.getLastDayTimeOfMonth2());
+		criteria.andIsLateEqualTo(1);
+
+		List<Records> records = recordsMapper.selectByExample(example);
+		return records;
 	}
 
 }
