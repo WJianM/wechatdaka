@@ -32,13 +32,10 @@ public class DakaController {
 	@ResponseBody
 	public Result addRecord(Records records, User user) {
 		recordtimeService.findAround(records.getRecordsDate(),user.getId());
-		// 新增一条记录,首先判断是不是上午 , 
-//		if (records.getRecordsDate().before(arg0)) {
-//
-//		}
+
 
 		try {
-			dakaService.save(records);
+			int i = dakaService.save(records);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(false,"打卡失败");
@@ -90,6 +87,7 @@ public class DakaController {
 		List<Records> list = dakaService.findIsLateByMonth(month);
 		return list;
 	}
+
 
 
 
