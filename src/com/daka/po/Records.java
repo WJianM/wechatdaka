@@ -1,5 +1,7 @@
 package com.daka.po;
 
+import com.daka.utils.DateUtils;
+
 import java.util.Date;
 
 public class Records {
@@ -41,5 +43,9 @@ public class Records {
 
     public void setIsLate(Integer isLate) {
         this.isLate = isLate;
+    }
+
+    public String getTime(){
+        return DateUtils.getDate(this.recordsDate);
     }
 }

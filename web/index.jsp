@@ -1,10 +1,28 @@
 <%@ page language="java" pageEncoding="utf-8" import="java.util.*" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>Calendar</title>
-  <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <%----%>
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+   <%-- <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>--%>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="js/bootstrap.min.js"></script>
+    <%----%>
+
+
+
   <style type="text/css">
     body{
       background:#f2f2f2;
@@ -88,6 +106,21 @@
       border:1px solid #6ac13c;
       background:#e9f8df;
     }
+    .geta{
+      width: 14.28%;
+      height: 36px;
+      line-height: 36px;
+      list-style-type: none;
+      display: block;
+      box-sizing: border-box;
+      float: left;
+      text-align: center;
+      border:3px solid #e7f510;
+      text-align: center;
+      align-items: center;
+    }
+
+
   </style>
 </head>
 
@@ -100,15 +133,24 @@
     <a href="" id="next">Next Month</a>
   </div>
   <div class="body">
-    <div class="lightgrey body-list">
+    <div class="lightgrey body-list" >
       <ul>
-        <li>MON</li>
+       <%-- <li>MON</li>
         <li>TUE</li>
         <li>WED</li>
         <li>THU</li>
         <li>FRI</li>
         <li>SAT</li>
         <li>SUN</li>
+        --%>
+        <li>星期一</li>
+        <li>星期二</li>
+        <li>星期三</li>
+        <li>星期四</li>
+        <li>星期五</li>
+        <li>星期六</li>
+        <li>星期日</li>
+
       </ul>
     </div>
     <div class="darkgrey body-list">
@@ -117,10 +159,20 @@
     </div>
   </div>
 </div>
+<hr width="450px"/>
+<div style="width: 450px" class="darkgrey">
+
+  <ul id="recodeList" class="list-unstyled" style="align-items: center">
+
+   <%-- <c:forEach items="${user}" var="user"></c:forEach>--%>
+  </ul>
+</div>
 <script type="text/javascript">
     var month_olympic = [31,29,31,30,31,30,31,31,30,31,30,31];
     var month_normal = [31,28,31,30,31,30,31,31,30,31,30,31];
-    var month_name = ["January","Febrary","March","April","May","June","July","Auguest","September","October","November","December"];
+
+   // var month_name = ["January","Febrary","March","April","May","June","July","Auguest","September","October","November","December"];
+    var month_name = ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
     var holder = document.getElementById("days");
     var prev = document.getElementById("prev");
     var next = document.getElementById("next");
@@ -154,6 +206,34 @@
         },"json")
 
     }
+    function showRecodrs(doc,i) {
+        $(".geta").removeClass("geta");
+        $(".darkgrey").each(function (va,vb,vc) {
+            vb.style.backgroundColor="#ffffff";
+        })
+        $(".lightgrey").each(function (va,vb,vc) {
+            vb.style.backgroundColor="#ffffff";
+        })
+          $(".green.greenbox").each(function (va,vb,vc) {
+            vb.style.backgroundColor="#e9f8df";
+        })
+
+
+
+        $(doc).addClass("geta");
+
+        jQuery.post("/getTodayList.do",{"recordsDate":i,"userId":1}, function (date) {
+            var htmls = "";
+            $("#recodeList").html("");
+            htmls+=" <li><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今日打卡记录</b></li>";
+            $(date).each(function (index,r) {
+               // alert(index+"--"+r.time);
+                htmls+="<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+r.time+"</li>";
+
+            })
+            $("#recodeList").html(htmls);
+        },"json")
+    }
     function refreshDate(){
         var str = "";
         var totalDay = daysMonth(my_month, my_year); //获取该月总天数
@@ -170,7 +250,7 @@
             }else{
                 myclass = " class='darkgrey'"; //当该日期在今后之后时，以深灰字体显示
             }
-            str += "<li"+myclass+" onclick='showMenu()'>"+i+"</li>"; //创建日期节点
+            str += "<li"+myclass+"  ondblclick='showMenu()' onclick='showRecodrs(this,"+i+")'>"+i+"</li>"; //创建日期节点
         }
         holder.innerHTML = str; //设置日期显示
         ctitle.innerHTML = month_name[my_month]; //设置英文月份显示

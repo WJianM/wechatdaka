@@ -1,5 +1,7 @@
 package com.daka.po;
 
+import com.daka.utils.DateUtils;
+
 import java.util.Date;
 
 public class Recordtime {
@@ -42,4 +44,6 @@ public class Recordtime {
     public void setType(Integer type) {
         this.type = type;
     }
+
+
 }

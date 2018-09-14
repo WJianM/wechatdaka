@@ -11,7 +11,6 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 //import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class DateUtils {
@@ -26,9 +25,9 @@ public class DateUtils {
 
         // System.out.println("一周前日期：" + date2String(addDays(-7)));
         // System.out.println("两天前日期：" + date2String(addDays(-2)));
-        // System.out.println("昨天日期：" + date2String(addDays(-1)));
-        // System.out.println("今天日期：" + date2String(addDays(0)));
-        // System.out.println("明天日期：" + date2String(addDays(1)));
+        System.out.println("昨天日期：" + date2String(addDays(-1)));
+        System.out.println("今天日期：" + date2String(addDays(0)));
+        System.out.println("明天日期：" + date2String(addDays(1)));
         // System.out.println("两天后日期：" + date2String(addDays(2)));
         // System.out.println("一周后日期：" + date2String(addDays(7)));
         //
@@ -200,6 +199,21 @@ public class DateUtils {
             return "";
         }
     }
+    /**
+     * 自定义格式化日期,
+     * @param format
+     * @param date
+     * @return
+     */
+//    public static Date formatStringTime(String  format,Date date) {
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+//        try {
+//           // return simpleDateFormat.parse(format,date);
+//        } catch (Exception e) {
+//            logger.debug("DateUtils.getDateTime():" + e.getMessage());
+//            return "";
+//        }
+//    }
 
     /**
      * 获得服务器当前日期及时间，以格式为：yyyy-MM-dd HH:mm:ss的日期字符串形式返回
@@ -1189,6 +1203,31 @@ public class DateUtils {
         cal.setTime(date2);
         long time2 = cal.getTimeInMillis();
         long between_days = (time2 - time1) / (1000 * 3600 * 24);
+//        long between_days = (time2 - time1) / (1000 * 3600);
+
+        return Integer.parseInt(String.valueOf(between_days));
+    }
+    /**
+     * 计算两个日期之间相差的小时数
+     *
+     * @param date1
+     * @param date2
+     * @return
+     */
+    public static int hoursBetween(Date date1, Date date2) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date1);
+        cal.set(Calendar.YEAR,Integer.parseInt(getYear()));
+        cal.set(Calendar.MONTH,Integer.parseInt(getMonth()));
+        cal.set(Calendar.DAY_OF_MONTH,Integer.parseInt(getDay()));
+        long time1 = cal.getTimeInMillis();
+        cal.setTime(date2);
+        cal.set(Calendar.YEAR,Integer.parseInt(getYear()));
+        cal.set(Calendar.MONTH,Integer.parseInt(getMonth()));
+        cal.set(Calendar.DAY_OF_MONTH,Integer.parseInt(getDay()));
+        long time2 = cal.getTimeInMillis();
+        long between_days = (time2 - time1) / (1000 * 3600 );
+//        long between_days = (time2 - time1) / (1000 * 3600);
 
         return Integer.parseInt(String.valueOf(between_days));
     }

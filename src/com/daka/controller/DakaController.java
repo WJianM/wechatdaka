@@ -89,6 +89,25 @@ public class DakaController {
 	}
 
 
+	/**
+	 * 查询今日打卡记录
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping("getTodayList")
+	@ResponseBody
+	public List<Records> getTodayList(String userId,String recordsDate) {
+		System.out.println(recordsDate);
+
+		//request.setAttrabutile("users",users);
+		List<Records> list = dakaService.getTodayList(recordsDate);
+		return list;
+	}
+
+
+
+
+
 
 
 }
